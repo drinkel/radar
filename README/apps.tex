@@ -1,0 +1,165 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\RADARextended}\label{sec:extended}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\RADARextended~is another graphical application from the RADAR toolbox. It provides detailed insight into the application behavior as well as the RADAR report, however it also brings possibility to select only the information we are interested in, and moreover interactive graphic elements that provides better insight into the behavior of evaluated application's regions.
+
+Previous Section~\ref{sec:basic} describes the RADAR configuration, which is mostly shared for both \RADARbasic~and \RADARextended. Also in case of the~\RADARextended~we have to specify list of the regions to include to the analysis, select sources of energy, time and performance counters, as well as names and roles of all the tuned parameters. Configuration files made by \RADARbasic~can be used in \RADARextended~as well as the ones from \RADARextended~in \RADARbasic. To understand the correct application settings, please, read the Section~\ref{sec:basic} first.
+
+\begin{wrapfigure}{l}{5.5cm}
+	\includegraphics[width=5.5cm]{img/mainMenu.png}
+	\caption{\RADARextended\newline main menu}
+	\label{fig:mainMenuWindow}
+\end{wrapfigure} 
+\bigskip
+%\noindent
+Use "\texttt{runRadarGUI\_analyze.py}" script to run \RADARextended, that will start the application with RADAR configuration specification or loading and after successful RADAR analysis (the analysis progress is also printed into the terminal), that precedes the visualization of the application behavior in graphical representation, main menu is displayed, that provides list of options as shown in Figure~\ref{fig:mainMenuWindow}. 
+
+The buttons of the menu are divided into two main sections. The first section provides graphic elements that represents the application behavior, the other one provides MERIC's and RADAR's configuration options and extended \LaTeX~report generation interface.
+
+All the elements describing the application behavior are presented in the Section~\ref{sec:report}, however among all of these are two common features, that we will describe now. In the the window of the elements you can find following options: 
+\begin{itemize}
+	\item \texttt{Generate LaTeX code} -- generates \LaTeX~code of~the current graphic content in the users' defined configuration, and saves it into a file.
+	\item \texttt{Add to LaTeX report} -- when generating a \LaTeX~report of the whole application, this graphic content in~the~current configuration will be part of the report.
+	\item \texttt{Save} -- Graph and heatmap also provide option to~save the element as image.
+\end{itemize}
+
+The \texttt{Generate LaTeX report} window, shows all the available elements in the corresponding report hierarchy, as shown in the Figure~\ref{fig:texDialog2}. In case that the \texttt{Add to LaTeX report} option was used, the hierarchy tree will also contain the extra elements that were added. In default only these extra elements are selected to be part of the final application report.
+
+\clearpage
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\textwidth]{img/texDialog2.png}
+	\caption{\RADARextended~structure of the report dialog}
+	\label{fig:texDialog2}
+\end{figure}
+
+In the Figure~\ref{fig:texDialog2} is a user-defined heatmap for the main region named \textit{Loop} with specified number of decimals and applied multiplier.
+
+Stand alone \LaTeX~code of a one single element as well as the whole report, always include \textit{"readex\_header.tex"} file, that specifies all the necessary settings and \LaTeX~packages used in the report.
+
+\newpage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Understanding RADAR report} \label{sec:report}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This section presents elements that are part of the RADAR report and also can be visualized from the \RADARextended, namely graphs, heatmap and tables describing behavior of the selected regions in different configurations. The elements are present in the order that we can find them in the RADAR report.
+
+%------------------------------------------------------------------------------%
+\subsection{Overall application summary}
+%------------------------------------------------------------------------------%
+Example of the Overall application summary table from the \RADARextended~is shown in the Figure~\ref{fig:overall}.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.9\textwidth]{img/overall}
+	\caption{Overall application summary}
+	\label{fig:overall}
+\end{figure}
+
+This table provides summary information about the application in its default settings, the best static configuration and when the dynamic configuration switching will be applied. The dynamic savings are evaluated in compare to the best static configuration, overall savings of the dynamic savings are sum of the static savings and dynamic savings. 
+
+Run-time change information tells us how the runtime of the whole application will change if we apply dynamic switching to the optimal energy-saving configuration in compare to the application runtime in the default configuration. This information is provided only if the RADAR configuration had the information about \texttt{Time-energy variables}.
+
+
+
+
+
+
+%------------------------------------------------------------------------------%
+\subsection{Plot and heatmap}
+%------------------------------------------------------------------------------%
+Graph of the values measured in the different configurations that were applied during the measurement phase give us the most synoptic description of the region behavior. Below the graph is also information what is the optimal configuration for the region, not only for the \texttt{xLabel} and \texttt{funcLabel} but values of the \texttt{key} parameters too.
+
+When displaying the graph in the \RADARextended~it is possible to zoom to specific area of the graph or select from line to scatter plot type.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\textwidth]{img/plotGUI}
+	\caption{A region behavior when different CPU core and uncore frequencies had been applied}
+	\label{fig:plot}
+\end{figure}
+
+In compare to the plot, heatmap provides exactly the same information, however exact measured values can be read from it. Furthermore, by clicking on a specific cell of a heatmap, user can get information about the values, from which is the value in the cell computed from. This might be handy in case of outlying measurements to identify them.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.8\textwidth]{img/heatGUI2}
+	\caption{Heatmap representaion of a region behavior}
+	\label{fig:heatmap}
+\end{figure}
+
+
+%Both plot and heatmap windows provide several options:
+%\begin{itemize}
+%	\item choose region to show
+%	\item select source of the data to present
+%	\item modify data unit
+%	\item switch axes
+%\end{itemize}
+
+
+
+%------------------------------------------------------------------------------%
+\subsection{Average program start}
+%------------------------------------------------------------------------------%
+Average program start table shows all the nested regions included into the analysis. For each region we have information about the region size in compare to the main region according the time, energy or any other selected values.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.85\textwidth]{img/average}
+	\caption{Average program start table}
+	\label{fig:averageStart}
+\end{figure}
+
+The best static configuration is the same for all the nested regions (optimal configuration of~the main region) and following column shows region consumption in this configuration. The best dynamic configuration is obviously individual for reach region. Also following column named \textit{Value} presents region's consumption in the best dynamic configuration. Following dynamic savings give us information how much we save in compare to the best static configuration of the application. Summary for all the regions follows at the end of the table.
+
+
+%------------------------------------------------------------------------------%
+\subsection{Cluster analysis}
+%------------------------------------------------------------------------------%
+
+Some energy measurement systems store power samples and MERIC may store them for each region call. This samples carry important information, because it may show that the region should be split into two or more smaller regions, if there are continuous clusters of power samples with the approximately same value. If such region is not covered with one or more nested regions, we loose opportunity to exploit the dynamism.
+
+Another kind of dynamism can be detected when the cluster analysis does not compare power samples within a region call, but overall energy consumption of all the region's calls. If~the consumption is not stable, it may vary together with a different region callpath or input. RADAR does not have any information about region input, however it will report region callpath and call id, to provide the information how the region should be split not to loose dynamism to~exploit.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{img/clusters.png}
+	\caption{Cluster analysis}
+	\label{fig:clusters}
+\end{figure}
+
+Cluster analysis is currently \textbf{not available} from the \RADARextended.
+
+%------------------------------------------------------------------------------%
+\subsection{Nested region table}
+%------------------------------------------------------------------------------%
+The last type of available table shows selected region behavior for all the measured values. Contribution of this table is in comparison of the region values and dynamicity for each region call (Phase ID).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.4\textwidth]{img/nested}
+	\caption{Nested region table}
+	\label{fig:nested}
+\end{figure}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%TODO - doplnit chybejici grafy/tabulky z reportu
+
+
+
+

@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "RADAR visualizer"
+version = "0.12"
+dependencies = [
+    "scikit-learn",
+    "matplotlib",
+    "packaging",
+    "seaborn",
+    "PyQt6",
+    "pydot",
+    "pyyed",
+]
+requires-python = ">=3.8"
+authors = [
+    {name = "a", email = "a"},
+    {name = "b", email = "b"},
+]
+maintainers = [
+    {name = "c", email = "c"}
+]
+description = "The RADAR visualizer is an application designed to present behavior of an HPC application and its
+subregions. It visualizes data measured by MERIC runtime system, that provides resources consumption monitoring 
+and dynamichardware and system-software parameters tuning to save energy to solution according the Horizon 2020 READEX approach."
+readme = "README.pdf"
+license = "BSD-3"
+license-files = "LICENSE"

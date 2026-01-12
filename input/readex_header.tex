@@ -1,0 +1,103 @@
+% LaTeX Constructions %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% you may copy-paste objects from RADAR reports to the paper using following 
+% constructions
+% 
+% IT4Innovations
+% Czech Republic
+
+
+% GRAPH %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{figure}
+%\begin{adjustbox}{width=\columnwidth}
+%...
+%\caption{graph caption}
+%\label{gra:READEX:gra1}
+%\end{figure}
+
+% HEATMAP %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{table}[H]
+%\centering
+%\begin{adjustbox}{max width=\columnwidth}
+%...
+%\end{adjustbox}
+%\vspace{1mm}
+%\caption{heatmap caption}
+%\label{tab:READEX:tab1}
+%\end{table}
+
+% LaTeX packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{adjustbox}
+\usepackage{makecell}
+
+\usepackage{longtable}
+\usepackage{pgfplotstable}
+\usepackage{colortbl}
+
+%\usepackage{picture}
+%\usepackage{tikz}
+%\usepackage{amsmath}
+%\usepackage{hhline}
+%\usepackage{pdfpages}
+%\pgfplotsset{compat=newest}
+%\usepackage{float}
+%usepackage{underscore} %may cause ERROR
+%\usepackage{environ}
+%\usepackage{tabu}
+%\usepackage{etoolbox}
+%\AtBeginEnvironment{longtabu}{\footnotesize}{}{}
+%\usepackage{booktabs}
+%\usepackage{multirow}
+%\usepackage{fancyvrb}
+%\usepackage{listings}
+%\usepackage{pgfplots}
+%\pgfplotsset{compat=newest}
+
+% READEX RADAR HEATMAP SETTINGS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\pgfplotstableset{
+    /color cells/min/.initial=0,
+    /color cells/max/.initial=1000,
+    /color cells/textcolor/.initial=,
+    %
+    color cells/.code={%
+        \pgfqkeys{/color cells}{#1}%
+        \pgfkeysalso{%
+            postproc cell content/.code={%
+                %
+                \begingroup
+                %
+                \pgfkeysgetvalue{/pgfplots/table/@preprocessed cell content}\value
+                \ifx\value\empty
+                    \endgroup
+                \else
+                \pgfmathfloatparsenumber{\value}%
+                \pgfmathfloattofixed{\pgfmathresult}%
+                \let\value=\pgfmathresult
+                %
+                \pgfplotscolormapaccess
+                    [\pgfkeysvalueof{/color cells/min}:\pgfkeysvalueof{/color cells/max}]
+                    {\value}
+                    {\pgfkeysvalueof{/pgfplots/colormap name}}%
+                \pgfkeysgetvalue{/pgfplots/table/@cell content}\typesetvalue
+                \pgfkeysgetvalue{/color cells/textcolor}\textcolorvalue
+                \toks0=\expandafter{\typesetvalue}%
+                \xdef\temp{%
+                    \noexpand\pgfkeysalso{%
+                        @cell content={%
+                            \noexpand\cellcolor[rgb]{\pgfmathresult}%
+                            \noexpand\definecolor{mapped color}{rgb}{\pgfmathresult}%
+                            \ifx\textcolorvalue\empty
+                            \else
+                                \noexpand\color{\textcolorvalue}%
+                            \fi
+                            \the\toks0 %
+                        }%
+                    }%
+                }%
+                \endgroup
+                \temp
+                \fi
+            }%
+        }%
+    }
+}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -1,0 +1,145 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+This document presents how to analyze data produced by MERIC library using RADAR tool and its GUI applications - \RADARbasic~and \RADARextended.
+
+RADAR can be run without any GUI, it does MERIC's output data analysis and provides MERIC's configuration file for future production runs of the optimized application and \LaTeX~report describing the application behavior when different tested configurations were applied. Unfortunately RADAR requires very complex configuration file to specify. \RADARbasic~is a graphical application that can be used to overcomes the problem and generate the configuration file very easily.
+
+The repository also contains \RADARextended, another graphical application that creates another layer above RADAR. It runs the RADAR~underneath and provides interactive graphic elements to show the application behavior in much more synoptic way than the \LaTeX report does.
+
+\bigskip \noindent
+MERIC repository: \href{https://code.it4i.cz/vys0053/meric}{https://code.it4i.cz/vys0053/meric} \\
+RADAR repository: \href{https://code.it4i.cz/bes0030/readex-radar}{https://code.it4i.cz/bes0030/readex-radar} \\
+RADAR GUI apps repository: \href{https://code.it4i.cz/vys0053/SGS18-READEX}{https://code.it4i.cz/vys0053/SGS18-READEX} \\
+
+%------------------------------------------------------------------------------%
+\subsection{RADAR tools requirements}
+%------------------------------------------------------------------------------%
+RADAR itself is written in Python3 using scikit-learn module for mathematical analysis.
+Also \RADARbasic~and \RADARextended~are as well as the RADAR itself based on Python3 together with PyQt6 GUI toolkit. In order to provide various graphic representations of the data, the applications has several dependencies. Complete list of dependencies contains:
+\begin{itemize}
+	\item Python3
+	\item scikit-learn
+\bigskip
+	\item PyQt6
+	\item seaborn -- used to generate heatmaps %TODO version
+	\item matplotlib -- used to generate region's graphs %TODO version
+	\item pydot (part of the repository) -- used to generate a graph of regions' callpath
+	\item pyEd (part of the repository) -- used to generate a graph of regions' callpath in yEd graph format~\footnote{yWorks' graph editor yEd can be download from: \href{https://www.yworks.com/products/yed}{https://www.yworks.com/products/yed}}
+\end{itemize}
+
+To settle connection with RADAR, it is necessary to create new file named \textit{"pathToRadar.json"} in the RADAR GUI repository root directory. The file must specify path to RADAR repository in the following format (with the quotation marks).
+
+\begin{lstlisting}
+	{
+		"pathToRadar": "/path/to/RADAR/"
+	}
+\end{lstlisting}
+
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\RADARbasic} \label{sec:basic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+As already briefly presented, the \RADARbasic~provides simple way how to create RADAR configuration file for specific MERIC output data. All the features of the application presents this Section.
+
+
+To use \RADARbasic~user should run "\texttt{runRadarGUI\_config.py}", that will show similar dialog as in the Figure~\ref{fig:startupAnalysis}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\textwidth]{img/runRadarGUIanalyze.png}
+	\caption{\RADARbasic~startup dialog}
+	\label{fig:startupAnalysis}
+\end{figure}
+
+\noindent
+There are three ways how to proceed from this dialog:
+\begin{itemize}
+	\item Enter path to MERIC measurement data and click on button \texttt{Configure} to create a new configuration file for the specified data.
+	\item Enter path to RADAR configuration file to either edit existing configuration file or to directly run RADAR analysis.
+	\item Enter both a data path and a configuration file path to edit the existing configuration file to fit the data provided. Use \texttt{Configure} button to proceed.
+\end{itemize}
+
+When running RADAR with an existing configuration file, the progress is written into the command line and the RADAR \LaTeX report is generated, optionally together with the MERIC configuration file. 
+
+Now we will focuse on the process of the RADAR configuration file creation.
+Window of the \RADARbasic consits of three tabs \texttt{Regions} (Figure \ref{fig:configureWindowRegions}), \texttt{Data parameters} (Figure \ref{fig:configureWindowDataParams}) and \texttt{Aditional options} (Figure~\ref{fig:addOptis}). 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{img/configure-1.png}
+	\caption{\RADARbasic~tab -- Regions}
+	\label{fig:configureWindowRegions}
+\end{figure}
+
+
+In the Regions tab a user must specify one Main region, a region that covers all the nested regions that will be evaluated. Next step is selection of the nested regions for the analysis. For a quick selection of the nested regions a filtering by time can be used. If none of the nested regions is selected the filter will select all regions with run time higher than specified, otherwise the filter will be applied at the list of already selected regions and will remove regions, that last shorter time than specified.
+
+To see region's callpath graph structure (together with information about the regions run times) use \texttt{Show region tree} button. Example of such graph is shown in Figure~\ref{fig:regTreeCOnfig}. This window allows to store the graph as an image or into yEd graph format.
+
+%TODO iteration region
+%User may also set up iteration region, this option is not required (default value is None). 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.6\textwidth]{img/regTreeConfig.png}
+	\caption{Graph of region's callpath structure}
+	\label{fig:regTreeCOnfig}
+\end{figure}
+
+
+In the second tab \texttt{Data parameters}, shown in~Figure \ref{fig:configureWindowDataParams}, we specify which of the measured data we want to evaluate and how the RADAR should work with them. The \texttt{y label} part allows us select which of the captured energy, time or performance counters should be included into the analysis. We recommend not to include all the data, since the analysis may take very long and the final report may become very long and not very synoptic.
+
+
+In the \texttt{Parameters} part of this tab, we must give name each of the parameter we changed in the application measurement time. Names of the default system parameters should be already filled-in, based on the information from the \textit{measurementInfo.json}, which is located in the measured data directory. Besides the names, also role of each parameter must be specified, There are 4 types of a role:
+\begin{itemize}
+	\item \texttt{xLabel}: parameter that we want to present on the x-axis of the graph in the analysis report. The parameter must be integer.
+	\item \texttt{funcLabel}: parameter that we want to present on the y-axis of the graph in the analysis report. The parameter must be integer.
+	\item \texttt{key}: another parameter, that we changed during the analysis. 
+	\item \texttt{config}: the parameter does not influence measured values, e.g. name of the computational node.
+\end{itemize}
+\noindent
+Always one \texttt{xLabel} and \texttt{funcLabel} must be specified. Since all the parameters values are strings or integers, we may apply on \texttt{xLabel} and \texttt{funcLabel} (the only parameters that we are sure that the type is integer) a multiplier, that will change the parameter unit. This way in the Figure~\ref{fig:configureWindowDataParams} the multiplier 0.1 change the unit from 0.1\,GHz to GHz.
+
+The default value of each parameter is in the analysis considered as the configuration for evaluation of the savings.
+
+Some energy measurement systems does measure CPUs, memories but not cover the computational node itself. In that case we may add \mbox{so-called} baseline, static power consumption of the parts not included in the measurement, for each measured value to approximate complete node energy consumption. To be able do such calculation, user must specify, for which source of energy and time measurement want to apply the baseline. This option is enabled by \texttt{Time-energy variables} \mbox{check-box}.
+Even if no baseline is applied, the information about time and energy measurement source are used in the analysis to evaluate how the runtime will change when the dynamic switching to the optimal energy-saving configuration is applied. In that case 0\,W baseline should be used.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{img/configure-2.png}
+	\caption{\RADARbasic~tab -- Data parameters}
+		\label{fig:configureWindowDataParams}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=.7\textwidth]{img/configure-3.png}
+	\caption{\RADARbasic~tab -- Additional options}
+	\label{fig:addOptis}
+\end{figure}
+
+\noindent %just beacuse the following paragraph is too short
+The last tab of the application, shown in the~Figure~\ref{fig:addOptis}, has several check-boxes:
+\begin{itemize}
+	\item \textbf{Detailed Info}: generate \LaTeX report with detailed information about each reagion of the analyzed application.
+	\item \textbf{Smooth runs average}: omit outliers when computing mean values.
+	\item \textbf{CSV init test}: turn on or off search in the analyzed data for potential corruption \footnote{CSV init test may significantly slow down analysis process.}.
+	\item \textbf{Generate optimal settings file}: generate MERIC configuration file with the optimal configuration for each analyzed region.
+\end{itemize}
+
+%TODO remove this part since it is obvious from the measurementInfo.json
+For the MERIC configuration file we must specify, which parameters represents the parameters, that MERIC is able to change during the application runtime. If any of the parameters had not been used, the corresponding item should remain unspecified.
+
+
+When all the required configurations are specified, \texttt{Save and run RADAR} button will start RADAR analysis (only if \textit{pathToRadar.json} is correctly specified). The process may take a moment, depends on the size and complexity of the analyzed data. Progress of the RADAR computations will be printed into the terminal.
+ 
+
+
+
+
+
+
+

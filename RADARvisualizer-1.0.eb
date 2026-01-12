@@ -1,0 +1,27 @@
+easyblock = 'Binary'
+
+name = 'RADARvisualizer'
+version = '1.0'
+
+homepage = 'https://code.it4i.cz/energy-efficiency/radar-visualizer/'
+description = "RADAR visualizer. IT4Innovations 2025."
+
+toolchain = SYSTEM
+
+source_urls = ['https://code.it4i.cz/energy-efficiency/meric-suite/radar-visualizer/-/archive/EB/']
+sources = ['radar-visualizer-EB.tar.gz']
+
+extract_sources = True
+
+builddependencies = [('Python', '3.9.6', '', ('GCCcore', '11.2.0'))]
+
+### installation sequence
+install_cmds = ['./install-environment.sh', './compile-to-binary.sh', 'cp -r bin/ %(installdir)s']
+
+### final check
+sanity_check_paths = {
+    'files': ['bin/RADARvisualizer'],
+    'dirs' : ['bin'],
+}
+
+moduleclass = 'tools'

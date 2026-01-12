@@ -1,0 +1,64 @@
+\documentclass[11pt, a4wide]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{latexsym}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{ifthen}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{listings}
+\usepackage{wrapfig}
+\usepackage{epsfig}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{listings}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\RADARbasic}{\textit{RADAR configurator}}
+\newcommand{\RADARextended}{\textit{RADAR visualizer}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\textwidth 6.3in
+\textheight 8.8in
+\topmargin -0.7in
+%\bottommargin -1.0in
+\oddsidemargin  0in
+\evensidemargin 0in
+\thispagestyle{empty}
+\begin{document}
+	\begin{center}
+		\vspace*{0.5cm}
+		\begin{huge}
+			RADAR GUI applications\\
+			user guide\\
+		\end{huge}
+		\begin{Large}
+			version 1.0\\
+			\bigskip
+%			IT4Innovations national supercomputing center\\
+			\begin{figure}[H]
+				\centering
+				\includegraphics[width=.3\textwidth]{img/IT4Ilogo.png}
+			\end{figure}
+			Czech Republic\\
+		\today
+		\end{Large}
+	\end{center}
+\vspace*{0.5cm}
+
+\tableofcontents
+
+\newpage
+\setcounter{page}{1}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{config_etc}
+\newpage
+\input{apps}
+
+\end{document}
