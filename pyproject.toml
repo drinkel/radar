@@ -3,7 +3,7 @@ requires = ["setuptools"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "RADAR visualizer"
+name = "radar-visualizer"
 version = "0.12"
 dependencies = [
     "scikit-learn",
@@ -27,3 +27,4 @@ readme = "README.pdf"
 license = "BSD-3"
 
 license-files = "LICENSE"
+
