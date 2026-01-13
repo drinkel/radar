@@ -19,3 +19,8 @@ description = "The RADAR visualizer is an application designed to present behavi
 readme = "README.md"
 license = {file = "LICENSE"}
 
+[tool.setuptools]
+packages = ["."]
+
+[project.scripts]
+radar-gui = "runRadarGUI_analyze:main"
