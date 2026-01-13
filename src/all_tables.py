@@ -10,7 +10,7 @@ import textwrap
 from shutil import copyfile
 from pathlib import Path
 import re
-from runRadarGUI_analyze import Ui_MainWindow
+from ui_base import Ui_MainWindow
 pp = pprint.PrettyPrinter(indent=4)
 import runRadarGUI_analyze
 from importlib import reload
@@ -1623,3 +1623,4 @@ if __name__ == '__main__':
 	w.createNewTable()
 	w.show()
 	sys.exit(app.exec_())
+
