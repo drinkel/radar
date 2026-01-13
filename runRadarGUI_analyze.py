@@ -273,14 +273,23 @@ class Ui_MainWindow(object):
             TabWidget.show()
             MainWindow.hide()'''
 
+    def main():
+    # Мы переносим import sys внутрь, чтобы он точно был доступен
+        import sys
+    
+    # Создаем приложение (обязательно должно быть внутри функции)
+        global app 
+        app = QtWidgets.QApplication(sys.argv)
+
+        global MainWindow
+        MainWindow = QtWidgets.QMainWindow()
+    
+        ui = Ui_MainWindow()
+        ui.setupUi(MainWindow)
+        MainWindow.show()
+
+        sys.exit(app.exec())
+
 if __name__ == "__main__":
-    import sys
+    main()
 
-    app = QtWidgets.QApplication(sys.argv)
-
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-
-    sys.exit(app.exec())
