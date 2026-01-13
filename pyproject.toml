@@ -23,8 +23,6 @@ license = {file = "LICENSE"}
 package-dir = {"" = "."}
 packages = ["src"] # если папка src есть в корне
 
-[tool.setuptools.py-modules]
-modules = ["runRadarGUI_analyze"] # Явно указываем одиночный файл в корне
-
 [project.scripts]
 radar-gui = "runRadarGUI_analyze:main"
+
