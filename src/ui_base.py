@@ -1,3 +1,12 @@
+from PyQt6 import QtCore, QtGui, QtWidgets
+from src import radarGUI_analyze
+import os
+import glob
+import errno
+import sys
+from PyQt6.QtGui import QCloseEvent
+optsfilepath = "asd"
+
 class Ui_MainWindow(object):
     #optsfilepath = "asd"
     def setupUi(self, MainWindow):
