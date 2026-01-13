@@ -12,24 +12,27 @@ optsfilepath = "asd"
 from src.ui_base import Ui_MainWindow
 
 def main():
-    # Мы переносим import sys внутрь, чтобы он точно был доступен
     import sys
-    
-    # Создаем приложение (обязательно должно быть внутри функции)
-    global app 
-    app = QtWidgets.QApplication(sys.argv)
+    # 1. Создаем приложение ПЕРВЫМ делом
+    app = QtWidgets.QApplication.instance()
+    if not app:
+        app = QtWidgets.QApplication(sys.argv)
 
-    global MainWindow
+    # 2. Создаем окно
     MainWindow = QtWidgets.QMainWindow()
-    
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
+    
+    # 3. Показываем
     MainWindow.show()
-
+    
+    # 4. Запускаем цикл обработки событий
+    print("RADAR GUI запущен. Нажмите Ctrl+C для выхода, если окно не появилось.")
     sys.exit(app.exec())
 
 if __name__ == "__main__":
     main()
+
 
 
 
