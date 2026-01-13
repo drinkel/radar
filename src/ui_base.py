@@ -8,6 +8,7 @@ from PyQt6.QtGui import QCloseEvent
 optsfilepath = "asd"
 
 class Ui_MainWindow(object):
+    app = QtWidgets.QApplication(sys.argv)
     #optsfilepath = "asd"
     def setupUi(self, MainWindow):
         
