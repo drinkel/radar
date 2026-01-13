@@ -11,8 +11,6 @@ class Ui_MainWindow(object):
     app = QtWidgets.QApplication(sys.argv)
     #optsfilepath = "asd"
     def setupUi(self, MainWindow):
-        
-
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(470, 280)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Policy.Fixed, QtWidgets.QSizePolicy.Policy.Fixed)
@@ -78,8 +76,6 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -94,8 +90,7 @@ class Ui_MainWindow(object):
         self.pushButton_Configure.clicked.connect(self.__Configure)
         self.pushButton_run.clicked.connect(self.__runRadar)
         #app.aboutToQuit.connect(self.closeEvent)
-        app.aboutToQuit.connect(lambda: self.closeEvent(QCloseEvent()))
-
+        QtWidgets.QApplication(sys.argv).aboutToQuit.connect(lambda: self.closeEvent(QCloseEvent()))
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
