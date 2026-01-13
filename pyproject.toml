@@ -19,9 +19,12 @@ description = "The RADAR visualizer is an application designed to present behavi
 readme = "README.md"
 license = {file = "LICENSE"}
 
-[tool.setuptools.packages.find]
-where = ["."]
-include = ["*"]
+[tool.setuptools]
+package-dir = {"" = "."}
+packages = ["src"] # если папка src есть в корне
+
+[tool.setuptools.py-modules]
+modules = ["runRadarGUI_analyze"] # Явно указываем одиночный файл в корне
 
 [project.scripts]
 radar-gui = "runRadarGUI_analyze:main"
