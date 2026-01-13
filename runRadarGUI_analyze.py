@@ -9,7 +9,7 @@ import errno
 import sys
 from PyQt6.QtGui import QCloseEvent
 optsfilepath = "asd"
-from runRadarGUI_analyze import Ui_MainWindow
+from ui_base import Ui_MainWindow
 
 def main():
     # Мы переносим import sys внутрь, чтобы он точно был доступен
@@ -30,5 +30,6 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
 
