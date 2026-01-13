@@ -25,4 +25,3 @@ packages = ["src"] # если папка src есть в корне
 
 [project.scripts]
 radar-gui = "runRadarGUI_analyze:main"
-
